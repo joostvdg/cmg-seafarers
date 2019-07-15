@@ -1,13 +1,42 @@
 version: 2
 jobs:
- build:
-   machine:
-     image: ubuntu-1604:201903-01
-   environment:
-     DOCKER_BUILDKIT: 1
-   steps:
-     - checkout
-     - run: docker version
-     - run: docker pull registry.access.redhat.com/ubi8/ubi-minimal:latest
-     - run: docker build -t cmg-seafarers --progress plain .
+  build:
+    machine:
+      image: ubuntu-1604:201903-01
+    environment:
+      DOCKER_BUILDKIT: 1
+    steps:
+      - checkout
+      - run: docker version
+      - run: docker pull quay.io/quarkus/centos-quarkus-maven:19.0.2
+      - run: docker pull registry.access.redhat.com/ubi8/ubi-minimal:latest
+      - run: docker build -t caladreas/cmg-seafarers --progress plain .
+      - run:
+          name: Deploy to Dockerhub
+          command: |
+            docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+            docker push caladreas/cmg-seafarers
+  deploy:
+    machine:
+      - image: ubuntu-1604:201903-01
+    steps:
+      - run:
+          name: Deploy to Heroku
+          command: |
+            docker login --email=${HEROKU_EMAIL} --username=${HEROKU_USER} --password=${HEROKU_TOKEN} registry.heroku.com
+            docker tag caladreas/cmg-seafarers registry.heroku.com/catan-map-generator-seafarers/web
+            docker push registry.heroku.com/catan-map-generator-seafarers/web
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
+
+
 
