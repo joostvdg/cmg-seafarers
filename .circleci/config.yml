@@ -14,7 +14,7 @@ jobs:
       - run:
           name: Deploy to Dockerhub
           command: |
-            docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
             docker push caladreas/cmg-seafarers
   deploy:
     machine:
@@ -23,7 +23,7 @@ jobs:
       - run:
           name: Deploy to Heroku
           command: |
-            docker login --email=${HEROKU_EMAIL} --username=${HEROKU_USER} --password=${HEROKU_TOKEN} registry.heroku.com
+            docker login --username=${HEROKU_USER} --password=${HEROKU_TOKEN} registry.heroku.com
             docker tag caladreas/cmg-seafarers registry.heroku.com/catan-map-generator-seafarers/web
             docker push registry.heroku.com/catan-map-generator-seafarers/web
 workflows:
