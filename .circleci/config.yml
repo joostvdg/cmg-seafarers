@@ -8,5 +8,6 @@ jobs:
    steps:
      - checkout
      - run: docker version
+     - run: docker pull registry.access.redhat.com/ubi8/ubi-minimal:latest
      - run: docker build -t cmg-seafarers --progress plain .
 
