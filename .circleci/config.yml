@@ -1,0 +1,11 @@
+version: 2
+jobs:
+ build:
+   machine: true
+   environment:
+     DOCKER_BUILDKIT: 1
+   steps:
+     - checkout
+     - run: docker version
+     - run: docker build -t cmg-seafarers --progress plain .
+
