@@ -14,8 +14,20 @@ public class Tile {
     this.number = number;
   }
 
+  public Landscape getLandscape() {
+    return landscape;
+  }
+
+  public Harbor getHarbor() {
+    return harbor;
+  }
+
+  public TileNumber getNumber() {
+    return number;
+  }
+
   @Override
   public String toString() {
-    return "|Tile{" + "landscape=" + landscape + ", harbor=" + harbor + ", number=" + number + "}|";
+    return "[" + landscape + ", " + number + "]";
   }
 }

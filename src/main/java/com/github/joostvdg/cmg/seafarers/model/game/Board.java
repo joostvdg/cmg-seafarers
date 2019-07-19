@@ -6,13 +6,13 @@ import java.util.Map;
 
 public class Board {
 
-  private Map<String, List<Tile>> board;
+  private Map<Integer, List<Tile>> tiles;
 
-  public Board(Map<String, List<Tile>> board) {
-    this.board = board;
+  public Board(Map<Integer, List<Tile>> tiles) {
+    this.tiles = tiles;
   }
 
-  public Map<String, List<Tile>> getBoard() {
-    return board;
+  public Map<Integer, List<Tile>> getTiles() {
+    return tiles;
   }
 }

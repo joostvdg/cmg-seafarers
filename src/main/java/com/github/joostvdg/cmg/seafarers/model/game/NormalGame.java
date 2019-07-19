@@ -33,33 +33,35 @@ public class NormalGame implements Game {
   @Override
   public String toString() {
     StringBuilder stringBuilder = new StringBuilder();
-    for (Map.Entry<String, List<Tile>> entry : board.getBoard().entrySet()) {
-      stringBuilder.append("-------------------\n");
-      stringBuilder.append("Row " + entry.getKey() + "\n");
-      entry.getValue().forEach(stringBuilder::append);
-      stringBuilder.append("\n-------------------");
+    for (Map.Entry<Integer, List<Tile>> entry : getBoard().getTiles().entrySet()) {
+      stringBuilder.append(entry.getKey());
+      for (Tile tile : entry.getValue()) {
+        stringBuilder.append(tile);
+        stringBuilder.append(" - ");
+      }
+      stringBuilder.append("\n");
     }
     return stringBuilder.toString();
   }
 
   private Board createBoard() {
-    Map<String, List<Tile>> boardTiles = layBoardTiles();
+    Map<Integer, List<Tile>> boardTiles = layBoardTiles();
     return new Board(boardTiles);
   }
 
-  private Map<String, List<Tile>> layBoardTiles() {
-    Map<String, List<Tile>> boardTiles = new TreeMap<>();
-    boardTiles.put("0", createColumnTiles(1));
-    boardTiles.put("1", createColumnTiles(2));
-    boardTiles.put("2", createColumnTiles(3));
-    boardTiles.put("3", createColumnTiles(4));
-    boardTiles.put("4", createColumnTiles(4));
-    boardTiles.put("5", createColumnTiles(4));
-    boardTiles.put("6", createColumnTiles(4));
-    boardTiles.put("7", createColumnTiles(4));
-    boardTiles.put("8", createColumnTiles(3));
-    boardTiles.put("9", createColumnTiles(2));
-    boardTiles.put("10", createColumnTiles(1));
+  private Map<Integer, List<Tile>> layBoardTiles() {
+    Map<Integer, List<Tile>> boardTiles = new TreeMap<>();
+    boardTiles.put(0, createColumnTiles(1));
+    boardTiles.put(1, createColumnTiles(2));
+    boardTiles.put(2, createColumnTiles(3));
+    boardTiles.put(3, createColumnTiles(4));
+    boardTiles.put(4, createColumnTiles(4));
+    boardTiles.put(5, createColumnTiles(4));
+    boardTiles.put(6, createColumnTiles(4));
+    boardTiles.put(7, createColumnTiles(4));
+    boardTiles.put(8, createColumnTiles(3));
+    boardTiles.put(9, createColumnTiles(2));
+    boardTiles.put(10, createColumnTiles(1));
     return boardTiles;
   }
 
@@ -128,5 +130,15 @@ public class NormalGame implements Game {
       Tile tile = new Tile(landscapeType, Harbor.ALL, tileNumber);
       tiles.add(tile);
     }
+  }
+
+  @Override
+  public Board getBoard() {
+    return this.board;
+  }
+
+  @Override
+  public String getGameType() {
+    return GameType.SEAFARERS_NORMAL.toString();
   }
 }
