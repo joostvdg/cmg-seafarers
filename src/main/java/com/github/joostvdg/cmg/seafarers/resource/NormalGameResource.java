@@ -6,7 +6,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-@Path("/normal/")
+@Path("/api/normal")
 public class NormalGameResource {
   @GET
   @Produces(MediaType.TEXT_PLAIN)
