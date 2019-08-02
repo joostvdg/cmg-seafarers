@@ -51,7 +51,14 @@ public class NormalGame implements Game {
 
   private Map<Integer, List<Tile>> layBoardTiles() {
     Map<Integer, List<Tile>> boardTiles = new TreeMap<>();
-    boardTiles.put(0, createColumnTiles(1));
+    Tile firstTile = new Tile(Landscape.SEA, Harbor.NONE, null);
+    List<Tile> firstColumn = new ArrayList<>();
+    firstColumn.add(firstTile);
+    Tile lastTile = new Tile(Landscape.SEA, Harbor.NONE, null);
+    List<Tile> lastColumn = new ArrayList<>();
+    lastColumn.add(lastTile);
+
+    boardTiles.put(0, firstColumn);
     boardTiles.put(1, createColumnTiles(2));
     boardTiles.put(2, createColumnTiles(3));
     boardTiles.put(3, createColumnTiles(4));
@@ -61,7 +68,7 @@ public class NormalGame implements Game {
     boardTiles.put(7, createColumnTiles(4));
     boardTiles.put(8, createColumnTiles(3));
     boardTiles.put(9, createColumnTiles(2));
-    boardTiles.put(10, createColumnTiles(1));
+    boardTiles.put(10, lastColumn);
     return boardTiles;
   }
 
@@ -111,7 +118,7 @@ public class NormalGame implements Game {
   }
 
   private void initTiles() {
-    addTilesOfType(19, Landscape.SEA);
+    addTilesOfType(17, Landscape.SEA); // first and last tile are required to be wather
     addTilesOfType(2, Landscape.GOLD);
     addTilesOfType(3, Landscape.DESERT);
     addTilesOfType(5, Landscape.FOREST);
@@ -127,7 +134,7 @@ public class NormalGame implements Game {
       if (landscapeType != Landscape.DESERT && landscapeType != Landscape.SEA) {
         tileNumber = retrieveRandomTileNumber();
       }
-      Tile tile = new Tile(landscapeType, Harbor.ALL, tileNumber);
+      Tile tile = new Tile(landscapeType, Harbor.NONE, tileNumber);
       tiles.add(tile);
     }
   }
