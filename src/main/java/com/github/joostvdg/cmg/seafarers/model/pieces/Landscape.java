@@ -1,7 +1,7 @@
 package com.github.joostvdg.cmg.seafarers.model.pieces;
 
 public enum Landscape {
-  GOLD("Gold Field", Resource.ANY),
+  GOLD("Gold", Resource.ANY),
   DESERT("Desert", Resource.DESERT),
   FIELD("Field", Resource.GRAIN),
   FOREST("Forest", Resource.LUMBER),

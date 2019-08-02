@@ -30,4 +30,8 @@ public class Tile {
   public String toString() {
     return "[" + landscape + ", " + number + "]";
   }
+
+  public boolean hasNumber() {
+    return number != null;
+  }
 }
