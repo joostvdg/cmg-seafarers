@@ -1,14 +1,14 @@
 package com.github.joostvdg.cmg.seafarers.model.pieces;
 
 public enum Landscape {
-  GOLD("Gold", Resource.ANY),
-  DESERT("Desert", Resource.DESERT),
-  FIELD("Field", Resource.GRAIN),
-  FOREST("Forest", Resource.LUMBER),
-  PASTURE("Pasture", Resource.WOOL),
-  MOUNTAINS("Mountains", Resource.ORE),
-  HILLS("Hills", Resource.BRICK),
-  SEA("Sea", Resource.SEA);
+  GOLD("Gold", Resource.ANY), // a
+  DESERT("Desert", Resource.DESERT), // b
+  FIELD("Field", Resource.GRAIN), // c
+  FOREST("Forest", Resource.LUMBER), // d
+  PASTURE("Pasture", Resource.WOOL), // e
+  MOUNTAINS("Mountains", Resource.ORE), // f
+  HILLS("Hills", Resource.BRICK), // g
+  SEA("Sea", Resource.SEA); // h
 
   private final String displayName;
   private final Resource resource;

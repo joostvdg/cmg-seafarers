@@ -122,6 +122,9 @@ public class NormalGame extends AbstractGame implements Game {
     stringBuilder.append("\n");
     stringBuilder.append(line19);
     stringBuilder.append("\n");
+    stringBuilder.append("Game Code: ");
+    stringBuilder.append(board.toGameCode());
+    stringBuilder.append("\n");
     return stringBuilder.toString();
   }
 

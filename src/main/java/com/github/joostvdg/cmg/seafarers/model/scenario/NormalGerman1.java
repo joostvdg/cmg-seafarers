@@ -1,4 +1,3 @@
 package com.github.joostvdg.cmg.seafarers.model.scenario;
 
-public class NormalGerman1 {
-}
+public class NormalGerman1 {}
