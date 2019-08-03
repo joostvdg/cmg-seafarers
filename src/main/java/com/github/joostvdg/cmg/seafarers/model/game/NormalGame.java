@@ -6,6 +6,8 @@ import com.github.joostvdg.cmg.seafarers.model.pieces.Tile;
 import com.github.joostvdg.cmg.seafarers.model.pieces.TileNumber;
 import com.google.common.base.Strings;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * NormalGame, a game for up to four players. For inspiration for the maps:
@@ -13,14 +15,30 @@ import java.util.*;
  */
 public class NormalGame extends AbstractGame implements Game {
 
+  private static Logger LOGGER = Logger.getLogger(NormalGame.class.getName());
+
   private final Board board;
   private static final int TOTAL_COLUMNS = 11;
+  public static final int NUMBER_OF_TILES = 44;
+  private static final List<BoardRow> boardRows;
 
-  public NormalGame() {
-    super();
-    initNumbers();
-    initTiles();
-    this.board = createBoard();
+  static {
+    boardRows = new ArrayList<>();
+    boardRows.add(new BoardRow(0, 1));
+    boardRows.add(new BoardRow(1, 2));
+    boardRows.add(new BoardRow(2, 3));
+    boardRows.add(new BoardRow(3, 4));
+    boardRows.add(new BoardRow(4, 3));
+    boardRows.add(new BoardRow(5, 4));
+    boardRows.add(new BoardRow(6, 3));
+    boardRows.add(new BoardRow(7, 4));
+    boardRows.add(new BoardRow(8, 3));
+    boardRows.add(new BoardRow(9, 4));
+    boardRows.add(new BoardRow(10, 3));
+    boardRows.add(new BoardRow(11, 4));
+    boardRows.add(new BoardRow(12, 3));
+    boardRows.add(new BoardRow(13, 2));
+    boardRows.add(new BoardRow(14, 1));
   }
 
   private final String line01 =
@@ -32,7 +50,7 @@ public class NormalGame extends AbstractGame implements Game {
   private final String line04 =
       ".................__________ / XXXXXXXXX \\\\ YYYYYY    // XXXXXXXXX \\ ___________................";
   private final String line05 =
-      "....__________ / XXXXXXXXX \\ YYYYYY    // XXXXXXXXX \\ YYYYYY    // XXXXXXXXX \\ __________....";
+      "....__________ / XXXXXXXXX \\\\ YYYYYY    // XXXXXXXXX \\\\ YYYYYY    // XXXXXXXXX \\ __________....";
   private final String line06 =
       "../ XXXXXXXXX \\\\ YYYYYY    // XXXXXXXXX \\\\ YYYYYY    // XXXXXXXXX \\\\ YYYYYY    // XXXXXXXXX \\..";
   private final String line07 =
@@ -61,6 +79,108 @@ public class NormalGame extends AbstractGame implements Game {
       ".........................................\\ YYYYYY    /.........................................";
   private final String line19 =
       "...............................................................................................";
+
+  public NormalGame() {
+    super();
+    initNumbers();
+    initTiles();
+    this.board = createBoard();
+  }
+
+  public NormalGame(String code) {
+    Map<Integer, List<Tile>> boardTiles = new TreeMap<>();
+
+    int codeIndex = 0;
+    for (BoardRow row : boardRows) {
+      List<Tile> tilesOfRow = inflateTilesForRow(code, codeIndex, row);
+      codeIndex = codeIndex + tilesOfRow.size() * 2;
+      boardTiles.put(row.getRowId(), tilesOfRow);
+      LOGGER.log(
+          Level.INFO, String.format("Row %d added %d tiles", row.getRowId(), tilesOfRow.size()));
+    }
+
+    this.board = new Board(boardTiles);
+  }
+
+  private static List<Tile> inflateTilesForRow(String code, int codeIndex, BoardRow row) {
+    List<Tile> tiles = new ArrayList<>();
+
+    for (int i = 0; i < row.getNumberOfTiles(); i++) {
+      String characterForLandscape = code.substring(codeIndex, codeIndex + 1);
+      codeIndex++;
+      String characterForNumber = code.substring(codeIndex, codeIndex + 1);
+      codeIndex++;
+
+      LOGGER.log(
+          Level.INFO,
+          String.format(
+              "characterForLandscape=%s, characterForNumber=%s, codeIndex=%d",
+              characterForLandscape, characterForNumber, codeIndex));
+
+      Landscape landscape = Board.LANDSCAPE_STRING_MAP_REVERSE.get(characterForLandscape);
+      TileNumber tileNumber = Board.TILE_NUMBER_STRING_MAP_REVERSE.get(characterForNumber);
+      Tile tile = new Tile(landscape, Harbor.NONE, tileNumber);
+      tiles.add(tile);
+    }
+    return tiles;
+  }
+
+  private Board createBoard() {
+    Map<Integer, List<Tile>> boardTiles = layBoardTiles();
+    return new Board(boardTiles);
+  }
+
+  private Map<Integer, List<Tile>> layBoardTiles() {
+    Map<Integer, List<Tile>> boardTiles = new TreeMap<>();
+    Tile firstTile = new Tile(Landscape.SEA, Harbor.NONE, null);
+    List<Tile> firstColumn = new ArrayList<>();
+    firstColumn.add(firstTile);
+    Tile lastTile = new Tile(Landscape.SEA, Harbor.NONE, null);
+    List<Tile> lastColumn = new ArrayList<>();
+    lastColumn.add(lastTile);
+
+    boardTiles.put(0, firstColumn);
+    for (int i = 1; i < boardRows.size() - 1; i++) {
+      BoardRow row = boardRows.get(i);
+      boardTiles.put(i, createColumnTiles(row.getNumberOfTiles()));
+    }
+    boardTiles.put(14, lastColumn);
+    return boardTiles;
+  }
+
+  protected void initNumbers() {
+    addNumbersOfType(2, TileNumber.TWO);
+    addNumbersOfType(3, TileNumber.THREE);
+    addNumbersOfType(3, TileNumber.FOUR);
+    addNumbersOfType(3, TileNumber.FIVE);
+    addNumbersOfType(3, TileNumber.SIX);
+    addNumbersOfType(3, TileNumber.EIGHT);
+    addNumbersOfType(3, TileNumber.NINE);
+    addNumbersOfType(3, TileNumber.TEN);
+    addNumbersOfType(3, TileNumber.ELEVEN);
+    addNumbersOfType(2, TileNumber.TWELVE);
+  }
+
+  protected void initTiles() {
+    addTilesOfType(17, Landscape.SEA); // first and last tile are required to be wather
+    addTilesOfType(2, Landscape.GOLD);
+    addTilesOfType(1, Landscape.DESERT);
+    addTilesOfType(5, Landscape.FOREST);
+    addTilesOfType(5, Landscape.PASTURE);
+    addTilesOfType(5, Landscape.FIELD);
+    addTilesOfType(5, Landscape.HILLS);
+    addTilesOfType(5, Landscape.MOUNTAINS);
+  }
+
+  @Override
+  public Board getBoard() {
+    return this.board;
+  }
+
+  @Override
+  public String getGameType() {
+    return GameType.SEAFARERS_NORMAL.toString();
+  }
 
   @Override
   public String toString() {
@@ -126,71 +246,5 @@ public class NormalGame extends AbstractGame implements Game {
     stringBuilder.append(board.toGameCode());
     stringBuilder.append("\n");
     return stringBuilder.toString();
-  }
-
-  private Board createBoard() {
-    Map<Integer, List<Tile>> boardTiles = layBoardTiles();
-    return new Board(boardTiles);
-  }
-
-  private Map<Integer, List<Tile>> layBoardTiles() {
-    Map<Integer, List<Tile>> boardTiles = new TreeMap<>();
-    Tile firstTile = new Tile(Landscape.SEA, Harbor.NONE, null);
-    List<Tile> firstColumn = new ArrayList<>();
-    firstColumn.add(firstTile);
-    Tile lastTile = new Tile(Landscape.SEA, Harbor.NONE, null);
-    List<Tile> lastColumn = new ArrayList<>();
-    lastColumn.add(lastTile);
-
-    boardTiles.put(0, firstColumn);
-    boardTiles.put(1, createColumnTiles(2));
-    boardTiles.put(2, createColumnTiles(3));
-    boardTiles.put(3, createColumnTiles(4));
-    boardTiles.put(4, createColumnTiles(3));
-    boardTiles.put(5, createColumnTiles(4));
-    boardTiles.put(6, createColumnTiles(3));
-    boardTiles.put(7, createColumnTiles(4));
-    boardTiles.put(8, createColumnTiles(3));
-    boardTiles.put(9, createColumnTiles(4));
-    boardTiles.put(10, createColumnTiles(3));
-    boardTiles.put(11, createColumnTiles(4));
-    boardTiles.put(12, createColumnTiles(3));
-    boardTiles.put(13, createColumnTiles(2));
-    boardTiles.put(14, lastColumn);
-    return boardTiles;
-  }
-
-  protected void initNumbers() {
-    addNumbersOfType(2, TileNumber.TWO);
-    addNumbersOfType(3, TileNumber.THREE);
-    addNumbersOfType(3, TileNumber.FOUR);
-    addNumbersOfType(3, TileNumber.FIVE);
-    addNumbersOfType(3, TileNumber.SIX);
-    addNumbersOfType(3, TileNumber.EIGHT);
-    addNumbersOfType(3, TileNumber.NINE);
-    addNumbersOfType(3, TileNumber.TEN);
-    addNumbersOfType(3, TileNumber.ELEVEN);
-    addNumbersOfType(2, TileNumber.TWELVE);
-  }
-
-  protected void initTiles() {
-    addTilesOfType(17, Landscape.SEA); // first and last tile are required to be wather
-    addTilesOfType(2, Landscape.GOLD);
-    addTilesOfType(1, Landscape.DESERT);
-    addTilesOfType(5, Landscape.FOREST);
-    addTilesOfType(5, Landscape.PASTURE);
-    addTilesOfType(5, Landscape.FIELD);
-    addTilesOfType(5, Landscape.HILLS);
-    addTilesOfType(5, Landscape.MOUNTAINS);
-  }
-
-  @Override
-  public Board getBoard() {
-    return this.board;
-  }
-
-  @Override
-  public String getGameType() {
-    return GameType.SEAFARERS_NORMAL.toString();
   }
 }

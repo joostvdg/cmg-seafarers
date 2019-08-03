@@ -7,11 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import org.jboss.resteasy.spi.NotImplementedYetException;
 
 public class LargeGame extends AbstractGame implements Game {
 
   private final Board board;
-  private static final int TOTAL_COLUMNS = 11;
+  private static final int TOTAL_COLUMNS = 18;
+  public static final int NUMBER_OF_TILES = 58;
 
   public LargeGame() {
     super();
@@ -33,6 +35,10 @@ public class LargeGame extends AbstractGame implements Game {
   private Board createBoard() {
     Map<Integer, List<Tile>> boardTiles = layBoardTiles();
     return new Board(boardTiles);
+  }
+
+  public Board getBoardByCode(String code) {
+    throw new NotImplementedYetException("This game type doesn't support inflation yet");
   }
 
   protected void initNumbers() {}
