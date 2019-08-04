@@ -1,8 +1,11 @@
 package com.github.joostvdg.cmg.seafarers.model.game;
 
+import java.util.ArrayList;
+import java.util.List;
 
-public interface Scenarios {
+public abstract class Scenarios {
 
+  // LEGEND
   //  GOLD("Gold", Resource.ANY),           // a
   //  DESERT("Desert", Resource.DESERT),    // b
   //  FIELD("Field", Resource.GRAIN),       // c
@@ -24,8 +27,48 @@ public interface Scenarios {
   //  TWELVE(12, 27)// q
   //  // p - meaning, no tile
 
-  public static final String NORMAL_GERMAN_2008_ONE =
-      "hpgvhpfycqhpcudsewfuexgrhpdzbpdvergtcyhpfscrfxhpeuethphpdwhpaxhphpgwcvhpdthpgyasfzhphphp";
-  public static final String ARBITRARY_EXAMPLE =
-      "hpexgycxhpexgvhpdthpfuewgshpdthpgvhpevhpewfuhphpewhpcxdthphphpcrhpfthphpdqhphpcxbphpcxhp";
+  public static final List<Scenario> SCENARIOS;
+
+  static {
+    SCENARIOS = new ArrayList<>();
+    SCENARIOS.add(
+            new Scenario.Builder()
+                    .name("2008 Six Island (5-6P-Large)")
+                    .author("999 Games")
+                    .description(
+                            "Large Scenario from 999 games for 2008 German edition. Described by Kelvin Chung.")
+                    .code("hphpgrdthpduewgwcteqcqhpfsfvhphpfxhphphphphpeyhpcwhpfrezeudxdvfyhpgshpdshphphphphpgwhphpftguhpcyczdwdxevethpgscvhphp")
+                    .build());
+    SCENARIOS.add(
+        new Scenario.Builder()
+            .name("2008 Two Island (4P-Normal)")
+            .author("999 Games")
+            .description(
+                "Standard Scenario from 999 games for 2008 German edition. Described by Kelvin Chung.")
+            .code(
+                "hpgvhpfycqhpcudsewfuexgrhpdzbpdvergtcyhpfscrfxhpeuethphpdwhpaxhphpgwcvhpdthpgyasfzhphphp")
+            .build());
+    SCENARIOS.add(
+        new Scenario.Builder()
+            .name("2008 Four Island (4P-Small)")
+            .author("999 Games")
+            .description(
+                "Standard Scenario from 999 games for 2008 German edition. Described by Kelvin Chung.")
+            .code("hpgxcwcvhpgsesetdyeufxhphpcrhphphpgzdvfyhphpgwdthphpcqcxdtfsdrfuhpewerhphp")
+            .build());
+    SCENARIOS.add(
+        new Scenario.Builder()
+            .name("2008 Four Island (4P-Normal)")
+            .author("999 Games")
+            .description(
+                "Standard Scenario from 999 games for 2008 German edition. Described by Kelvin Chung.")
+            .code(
+                "hphpdqdthpdvexhpeteycshpfsfuhpgrfxhphphphphphphphphphpbpgzbpfwguhpcyctcwhpeverhpgscxhphp")
+            .build());
+
+    //    SCENARIOS.add(new Scenario.Builder()
+    //            .name("").author("").description("")
+    //            .code("")
+    //            .build());
+  }
 }

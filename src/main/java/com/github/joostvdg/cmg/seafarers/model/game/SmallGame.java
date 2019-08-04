@@ -1,21 +1,21 @@
 package com.github.joostvdg.cmg.seafarers.model.game;
 
+import com.github.joostvdg.cmg.seafarers.model.pieces.Landscape;
 import com.github.joostvdg.cmg.seafarers.model.pieces.Tile;
+import com.github.joostvdg.cmg.seafarers.model.pieces.TileNumber;
 import com.google.common.base.Strings;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import org.jboss.resteasy.spi.NotImplementedYetException;
-
-public class LargeGame extends AbstractGame implements Game {
+public class SmallGame extends AbstractGame implements Game {
+  private static Logger LOGGER = Logger.getLogger(SmallGame.class.getName());
 
   private final Board board;
-  // 10 + (9*2) + (8*2) + (7*2)
-  public static final int NUMBER_OF_TILES = 58;
-
+  public static final int NUMBER_OF_TILES = 37;
   private static final List<BoardRow> boardRows;
 
   static {
@@ -31,60 +31,8 @@ public class LargeGame extends AbstractGame implements Game {
     boardRows.add(new BoardRow(8, 3));
     boardRows.add(new BoardRow(9, 4));
     boardRows.add(new BoardRow(10, 3));
-    boardRows.add(new BoardRow(11, 4));
-    boardRows.add(new BoardRow(12, 3));
-    boardRows.add(new BoardRow(13, 4));
-    boardRows.add(new BoardRow(14, 3));
-    boardRows.add(new BoardRow(15, 4));
-    boardRows.add(new BoardRow(16, 3));
-    boardRows.add(new BoardRow(17, 2));
-    boardRows.add(new BoardRow(18, 1));
-  }
-
-  public LargeGame() {
-    super();
-    initNumbers();
-    initTiles();
-    this.board = createBoard();
-  }
-
-  public LargeGame(String code) {
-    Map<Integer, List<Tile>> boardTiles = new TreeMap<>();
-
-    int codeIndex = 0;
-    for (BoardRow row : boardRows) {
-      List<Tile> tilesOfRow = inflateTilesForRow(code, codeIndex, row);
-      codeIndex = codeIndex + tilesOfRow.size() * 2;
-      boardTiles.put(row.getRowId(), tilesOfRow);
-    }
-    this.board = new Board(boardTiles);
-  }
-
-  @Override
-  public Board getBoard() {
-    return this.board;
-  }
-
-  @Override
-  public String getGameType() {
-    return GameType.SEAFARERS_LARGE.toString();
-  }
-
-  private Board createBoard() {
-    Map<Integer, List<Tile>> boardTiles = layBoardTiles();
-    return new Board(boardTiles);
-  }
-
-  public Board getBoardByCode(String code) {
-    throw new NotImplementedYetException("This game type doesn't support inflation yet");
-  }
-
-  protected void initNumbers() {}
-
-  protected void initTiles() {}
-
-  protected List<BoardRow> boardRows() {
-    return boardRows;
+    boardRows.add(new BoardRow(11, 2));
+    boardRows.add(new BoardRow(12, 1));
   }
 
   private final String line01 =
@@ -96,7 +44,7 @@ public class LargeGame extends AbstractGame implements Game {
   private final String line04 =
       ".................__________ / XXXXXXXXX \\\\ YYYYYY    // XXXXXXXXX \\ ___________................";
   private final String line05 =
-      "....__________ / XXXXXXXXX \\ YYYYYY    // XXXXXXXXX \\ YYYYYY    // XXXXXXXXX \\ __________....";
+      "....__________ / XXXXXXXXX \\\\ YYYYYY    // XXXXXXXXX \\\\ YYYYYY    // XXXXXXXXX \\ __________....";
   private final String line06 =
       "../ XXXXXXXXX \\\\ YYYYYY    // XXXXXXXXX \\\\ YYYYYY    // XXXXXXXXX \\\\ YYYYYY    // XXXXXXXXX \\..";
   private final String line07 =
@@ -114,25 +62,76 @@ public class LargeGame extends AbstractGame implements Game {
   private final String line13 =
       "..\\ YYYYYY    // XXXXXXXXX \\\\ YYYYYY    // XXXXXXXXX \\\\ YYYYYY    // XXXXXXXXX \\\\ YYYYYY    /..";
   private final String line14 =
-      "../ XXXXXXXXX \\\\ YYYYYY    // XXXXXXXXX \\\\ YYYYYY    // XXXXXXXXX \\\\ YYYYYY    // XXXXXXXXX \\..";
-  private final String line15 =
-      "..\\ YYYYYY    // XXXXXXXXX \\\\ YYYYYY    // XXXXXXXXX \\\\ YYYYYY    // XXXXXXXXX \\\\ YYYYYY    /..";
-  private final String line16 =
-      "../ XXXXXXXXX \\\\ YYYYYY    // XXXXXXXXX \\\\ YYYYYY    // XXXXXXXXX \\\\ YYYYYY    // XXXXXXXXX \\..";
-  private final String line17 =
-      "..\\ YYYYYY    // XXXXXXXXX \\\\ YYYYYY    // XXXXXXXXX \\\\ YYYYYY    // XXXXXXXXX \\\\ YYYYYY    /..";
-  private final String line18 =
-      "../ XXXXXXXXX \\\\ YYYYYY    // XXXXXXXXX \\\\ YYYYYY    // XXXXXXXXX \\\\ YYYYYY    // XXXXXXXXX \\..";
-  private final String line19 =
-      "..\\ YYYYYY    // XXXXXXXXX \\\\ YYYYYY    // XXXXXXXXX \\\\ YYYYYY    // XXXXXXXXX \\\\ YYYYYY    /..";
-  private final String line20 =
       "...............\\ YYYYYY    // XXXXXXXXX \\\\ YYYYYY    // XXXXXXXXX \\\\ YYYYYY    /...............";
-  private final String line21 =
+  private final String line15 =
       "............................\\ YYYYYY    // XXXXXXXXX \\\\ YYYYYY    /............................";
-  private final String line22 =
+  private final String line16 =
       ".........................................\\ YYYYYY    /.........................................";
-  private final String line23 =
+  private final String line17 =
       "...............................................................................................";
+
+  public SmallGame() {
+    super();
+    initNumbers();
+    initTiles();
+    this.board = createBoard();
+  }
+
+  public SmallGame(String code) {
+    Map<Integer, List<Tile>> boardTiles = new TreeMap<>();
+
+    int codeIndex = 0;
+    for (BoardRow row : boardRows) {
+      List<Tile> tilesOfRow = inflateTilesForRow(code, codeIndex, row);
+      codeIndex = codeIndex + tilesOfRow.size() * 2;
+      boardTiles.put(row.getRowId(), tilesOfRow);
+      LOGGER.log(
+          Level.FINE, String.format("Row %d added %d tiles", row.getRowId(), tilesOfRow.size()));
+    }
+
+    this.board = new Board(boardTiles);
+  }
+
+  private Board createBoard() {
+    Map<Integer, List<Tile>> boardTiles = layBoardTiles();
+    return new Board(boardTiles);
+  }
+
+  protected List<BoardRow> boardRows() {
+    return boardRows;
+  }
+
+  protected void initNumbers() {
+    addNumbersOfType(1, TileNumber.TWO);
+    addNumbersOfType(2, TileNumber.THREE);
+    addNumbersOfType(3, TileNumber.FOUR);
+    addNumbersOfType(3, TileNumber.FIVE);
+    addNumbersOfType(2, TileNumber.SIX);
+    addNumbersOfType(2, TileNumber.EIGHT);
+    addNumbersOfType(3, TileNumber.NINE);
+    addNumbersOfType(3, TileNumber.TEN);
+    addNumbersOfType(3, TileNumber.ELEVEN);
+    addNumbersOfType(1, TileNumber.TWELVE);
+  }
+
+  protected void initTiles() {
+    addTilesOfType(12, Landscape.SEA); // first and last tile are required to be wather
+    addTilesOfType(5, Landscape.FOREST);
+    addTilesOfType(5, Landscape.PASTURE);
+    addTilesOfType(5, Landscape.FIELD);
+    addTilesOfType(4, Landscape.HILLS);
+    addTilesOfType(4, Landscape.MOUNTAINS);
+  }
+
+  @Override
+  public Board getBoard() {
+    return this.board;
+  }
+
+  @Override
+  public String getGameType() {
+    return GameType.SEAFARERS_NORMAL.toString();
+  }
 
   @Override
   public String toString() {
@@ -154,12 +153,6 @@ public class LargeGame extends AbstractGame implements Game {
     rowLines.add(line15);
     rowLines.add(line16);
     rowLines.add(line17);
-    rowLines.add(line18);
-    rowLines.add(line19);
-    rowLines.add(line20);
-    rowLines.add(line21);
-    rowLines.add(line22);
-    rowLines.add(line23);
 
     StringBuilder stringBuilder = new StringBuilder();
     stringBuilder.append(line01);
@@ -179,6 +172,7 @@ public class LargeGame extends AbstractGame implements Game {
 
       // Second pass: retrieve tile number of previous row
       if (rowId != 0) { // skip first one, as there is no previous row
+        LOGGER.log(Level.FINE, String.format("Retrieving previous row, rowId %s", rowId));
         List<Tile> tilesOfPreviousRow = getBoard().getTiles().get(rowId - 1);
         for (Tile tile : tilesOfPreviousRow) {
           String numberText = "";
@@ -193,10 +187,10 @@ public class LargeGame extends AbstractGame implements Game {
       stringBuilder.append("\n");
     }
 
-    String secondLastRow = line22.replaceFirst("YYYYYY", "      ");
+    String secondLastRow = line16.replaceFirst("YYYYYY", "      ");
     stringBuilder.append(secondLastRow);
     stringBuilder.append("\n");
-    stringBuilder.append(line23);
+    stringBuilder.append(line17);
     stringBuilder.append("\n");
     stringBuilder.append("Game Code: ");
     stringBuilder.append(board.toGameCode());

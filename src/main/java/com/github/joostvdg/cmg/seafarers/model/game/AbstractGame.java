@@ -4,9 +4,7 @@ import com.github.joostvdg.cmg.seafarers.model.pieces.Harbor;
 import com.github.joostvdg.cmg.seafarers.model.pieces.Landscape;
 import com.github.joostvdg.cmg.seafarers.model.pieces.Tile;
 import com.github.joostvdg.cmg.seafarers.model.pieces.TileNumber;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public abstract class AbstractGame {
 
@@ -26,6 +24,8 @@ public abstract class AbstractGame {
   protected abstract void initNumbers();
 
   protected abstract void initTiles();
+
+  protected abstract List<BoardRow> boardRows();
 
   protected List<Tile> tiles() {
     return this.tiles;
@@ -72,5 +72,40 @@ public abstract class AbstractGame {
       Tile tile = new Tile(landscapeType, Harbor.NONE, tileNumber);
       tiles().add(tile);
     }
+  }
+
+  protected static List<Tile> inflateTilesForRow(String code, int codeIndex, BoardRow row) {
+    List<Tile> tiles = new ArrayList<>();
+
+    for (int i = 0; i < row.getNumberOfTiles(); i++) {
+      String characterForLandscape = code.substring(codeIndex, codeIndex + 1);
+      codeIndex++;
+      String characterForNumber = code.substring(codeIndex, codeIndex + 1);
+      codeIndex++;
+
+      Landscape landscape = Board.LANDSCAPE_STRING_MAP_REVERSE.get(characterForLandscape);
+      TileNumber tileNumber = Board.TILE_NUMBER_STRING_MAP_REVERSE.get(characterForNumber);
+      Tile tile = new Tile(landscape, Harbor.NONE, tileNumber);
+      tiles.add(tile);
+    }
+    return tiles;
+  }
+
+  protected Map<Integer, List<Tile>> layBoardTiles() {
+    Map<Integer, List<Tile>> boardTiles = new TreeMap<>();
+    Tile firstTile = new Tile(Landscape.SEA, Harbor.NONE, null);
+    List<Tile> firstColumn = new ArrayList<>();
+    firstColumn.add(firstTile);
+    Tile lastTile = new Tile(Landscape.SEA, Harbor.NONE, null);
+    List<Tile> lastColumn = new ArrayList<>();
+    lastColumn.add(lastTile);
+
+    boardTiles.put(0, firstColumn);
+    for (int i = 1; i < boardRows().size() - 1; i++) {
+      BoardRow row = boardRows().get(i);
+      boardTiles.put(i, createColumnTiles(row.getNumberOfTiles()));
+    }
+    boardTiles.put(14, lastColumn);
+    return boardTiles;
   }
 }
