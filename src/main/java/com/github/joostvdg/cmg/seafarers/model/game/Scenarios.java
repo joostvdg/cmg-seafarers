@@ -1,6 +1,5 @@
 package com.github.joostvdg.cmg.seafarers.model.game;
 
-import com.github.joostvdg.cmg.seafarers.model.game.Game;
 
 public interface Scenarios {
 

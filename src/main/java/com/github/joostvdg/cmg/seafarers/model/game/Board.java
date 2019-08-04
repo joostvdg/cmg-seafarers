@@ -9,10 +9,19 @@ import java.util.TreeMap;
 
 public class Board {
 
-  private Map<Integer, List<Tile>> tiles;
+  private final Map<Integer, List<Tile>> tiles;
+
+  private String code = "N/A";
 
   public Board(Map<Integer, List<Tile>> tiles) {
     this.tiles = tiles;
+  }
+
+  public String getCode() {
+    if (code.equals("N/A")) { // lazy init
+      toGameCode();
+    }
+    return code;
   }
 
   public Map<Integer, List<Tile>> getTiles() {
@@ -89,6 +98,7 @@ public class Board {
         }
       }
     }
-    return builder.toString();
+    this.code = builder.toString();
+    return this.code;
   }
 }
