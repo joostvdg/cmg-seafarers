@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.logging.Level;
-
 import org.jboss.resteasy.spi.NotImplementedYetException;
 
 public class LargeGame extends AbstractGame implements Game {

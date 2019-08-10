@@ -20,6 +20,7 @@ public class GameCodeInflator {
   }
 
   public GameCodeInflator(final String code) {
+    LOG.info("Attempt to inflate game based on code: " + code);
     if (Strings.isNullOrEmpty(code)) {
       throw new IllegalArgumentException("There's no code");
     }

@@ -32,13 +32,14 @@ public abstract class Scenarios {
   static {
     SCENARIOS = new ArrayList<>();
     SCENARIOS.add(
-            new Scenario.Builder()
-                    .name("2008 Six Island (5-6P-Large)")
-                    .author("999 Games")
-                    .description(
-                            "Large Scenario from 999 games for 2008 German edition. Described by Kelvin Chung.")
-                    .code("hphpgrdthpduewgwcteqcqhpfsfvhphpfxhphphphphpeyhpcwhpfrezeudxdvfyhpgshpdshphphphphpgwhphpftguhpcyczdwdxevethpgscvhphp")
-                    .build());
+        new Scenario.Builder()
+            .name("2008 Six Island (5-6P-Large)")
+            .author("999 Games")
+            .description(
+                "Large Scenario from 999 games for 2008 German edition. Described by Kelvin Chung.")
+            .code(
+                "hphpgrdthpduewgwcteqcqhpfsfvhphpfxhphphphphpeyhpcwhpfrezeudxdvfyhpgshpdshphphphphpgwhphpftguhpcyczdwdxevethpgscvhphp")
+            .build());
     SCENARIOS.add(
         new Scenario.Builder()
             .name("2008 Two Island (4P-Normal)")
