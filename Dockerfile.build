@@ -1,0 +1,9 @@
+# syntax=docker/dockerfile:experimental
+#######################################
+## 1. BUILD JAR WITH MAVEN
+FROM maven:3.6-jdk-11 as BUILD
+WORKDIR /usr/src
+COPY . /usr/src
+RUN --mount=type=cache,target=/root/.m2/  mvn clean verify -e
+#######################################
+
