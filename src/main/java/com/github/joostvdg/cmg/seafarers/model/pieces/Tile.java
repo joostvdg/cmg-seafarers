@@ -1,5 +1,8 @@
 package com.github.joostvdg.cmg.seafarers.model.pieces;
 
+import io.quarkus.runtime.annotations.RegisterForReflection;
+
+@RegisterForReflection
 public class Tile {
 
   private final Landscape landscape;

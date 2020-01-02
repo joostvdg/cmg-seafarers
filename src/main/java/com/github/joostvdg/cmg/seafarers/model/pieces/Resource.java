@@ -8,7 +8,8 @@ public enum Resource {
   BRICK(4, "Brick"),
   ORE(5, "Ore"),
   DESERT(6, "Desert"),
-  SEA(7, "Sea");
+  SEA(7, "Sea"),
+  GOLD(8, "Gold");
 
   private final int code;
   private final String displayName;

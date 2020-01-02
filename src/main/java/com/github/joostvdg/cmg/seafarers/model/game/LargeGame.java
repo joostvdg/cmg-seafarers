@@ -6,8 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+
+import io.quarkus.runtime.annotations.RegisterForReflection;
 import org.jboss.resteasy.spi.NotImplementedYetException;
 
+@RegisterForReflection
 public class LargeGame extends AbstractGame implements Game {
 
   private final Board board;

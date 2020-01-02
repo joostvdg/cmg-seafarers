@@ -4,6 +4,8 @@ import com.github.joostvdg.cmg.seafarers.model.pieces.Landscape;
 import com.github.joostvdg.cmg.seafarers.model.pieces.Tile;
 import com.github.joostvdg.cmg.seafarers.model.pieces.TileNumber;
 import com.google.common.base.Strings;
+import io.quarkus.runtime.annotations.RegisterForReflection;
+
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,6 +14,7 @@ import java.util.logging.Logger;
  * NormalGame, a game for up to four players. For inspiration for the maps:
  * http://gemkapocs.keszthelyonline.hu/letoltes/Complete_Scenario_and_Variant_Guide.pdf
  */
+@RegisterForReflection
 public class NormalGame extends AbstractGame implements Game {
 
   private static Logger LOGGER = Logger.getLogger(NormalGame.class.getName());
@@ -22,21 +25,13 @@ public class NormalGame extends AbstractGame implements Game {
 
   static {
     boardRows = new ArrayList<>();
-    boardRows.add(new BoardRow(0, 1));
-    boardRows.add(new BoardRow(1, 2));
-    boardRows.add(new BoardRow(2, 3));
-    boardRows.add(new BoardRow(3, 4));
-    boardRows.add(new BoardRow(4, 3));
-    boardRows.add(new BoardRow(5, 4));
-    boardRows.add(new BoardRow(6, 3));
-    boardRows.add(new BoardRow(7, 4));
-    boardRows.add(new BoardRow(8, 3));
-    boardRows.add(new BoardRow(9, 4));
-    boardRows.add(new BoardRow(10, 3));
-    boardRows.add(new BoardRow(11, 4));
-    boardRows.add(new BoardRow(12, 3));
-    boardRows.add(new BoardRow(13, 2));
-    boardRows.add(new BoardRow(14, 1));
+    boardRows.add(new BoardRow(0, 5));
+    boardRows.add(new BoardRow(1, 6));
+    boardRows.add(new BoardRow(2, 7));
+    boardRows.add(new BoardRow(3, 8));
+    boardRows.add(new BoardRow(4, 7));
+    boardRows.add(new BoardRow(5, 6));
+    boardRows.add(new BoardRow(6, 5));
   }
 
   private final String line01 =
@@ -119,11 +114,11 @@ public class NormalGame extends AbstractGame implements Game {
     addNumbersOfType(3, TileNumber.NINE);
     addNumbersOfType(3, TileNumber.TEN);
     addNumbersOfType(3, TileNumber.ELEVEN);
-    addNumbersOfType(2, TileNumber.TWELVE);
+    addNumbersOfType(1, TileNumber.TWELVE);
   }
 
   protected void initTiles() {
-    addTilesOfType(17, Landscape.SEA); // first and last tile are required to be wather
+    addTilesOfType(16, Landscape.SEA);
     addTilesOfType(2, Landscape.GOLD);
     addTilesOfType(1, Landscape.DESERT);
     addTilesOfType(5, Landscape.FOREST);

@@ -6,18 +6,13 @@
     <artifactId>cmg-seafarers</artifactId>
     <version>1.0-SNAPSHOT</version>
     <properties>
-<<<<<<< HEAD
         <compiler-plugin.version>3.8.1</compiler-plugin.version>
         <maven.compiler.parameters>true</maven.compiler.parameters>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <maven.compiler.source>1.8</maven.compiler.source>
-=======
         <surefire-plugin.version>2.22.2</surefire-plugin.version>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
         <quarkus.version>0.21.2</quarkus.version>
         <javac.version>9+181-r4173-1</javac.version>
->>>>>>> 1a8027b8bfb2678fdb000a5a8b7d9c51c54981ab
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <quarkus-plugin.version>1.0.1.Final</quarkus-plugin.version>

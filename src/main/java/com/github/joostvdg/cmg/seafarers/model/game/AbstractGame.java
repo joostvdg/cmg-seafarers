@@ -4,8 +4,11 @@ import com.github.joostvdg.cmg.seafarers.model.pieces.Harbor;
 import com.github.joostvdg.cmg.seafarers.model.pieces.Landscape;
 import com.github.joostvdg.cmg.seafarers.model.pieces.Tile;
 import com.github.joostvdg.cmg.seafarers.model.pieces.TileNumber;
+import io.quarkus.runtime.annotations.RegisterForReflection;
+
 import java.util.*;
 
+@RegisterForReflection
 public abstract class AbstractGame {
 
   private final List<Tile> tiles;
@@ -40,6 +43,7 @@ public abstract class AbstractGame {
   protected Tile retrieveRandomTile() {
     if (!tilesAreShuffled) {
       Collections.shuffle(tiles);
+      tilesAreShuffled = true;
     }
     Tile tile = tiles.get(tilesCounter);
     tilesCounter++;
@@ -93,19 +97,10 @@ public abstract class AbstractGame {
 
   protected Map<Integer, List<Tile>> layBoardTiles() {
     Map<Integer, List<Tile>> boardTiles = new TreeMap<>();
-    Tile firstTile = new Tile(Landscape.SEA, Harbor.NONE, null);
-    List<Tile> firstColumn = new ArrayList<>();
-    firstColumn.add(firstTile);
-    Tile lastTile = new Tile(Landscape.SEA, Harbor.NONE, null);
-    List<Tile> lastColumn = new ArrayList<>();
-    lastColumn.add(lastTile);
-
-    boardTiles.put(0, firstColumn);
-    for (int i = 1; i < boardRows().size() - 1; i++) {
+    for (int i = 0; i < boardRows().size(); i++) {
       BoardRow row = boardRows().get(i);
       boardTiles.put(i, createColumnTiles(row.getNumberOfTiles()));
     }
-    boardTiles.put(14, lastColumn);
     return boardTiles;
   }
 }
