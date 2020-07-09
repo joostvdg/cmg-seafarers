@@ -42,6 +42,10 @@ public class GameCodeInflator {
         LOG.info("Inflating Small Game");
         this.game = new SmallGame(code);
         break;
+      //missing default case
+      default:
+          // add default case
+          break;
     }
   }
 
