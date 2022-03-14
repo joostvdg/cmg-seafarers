@@ -32,7 +32,7 @@ public class NormalGameResource {
     } catch (Exception e) {
       String errorMessage = "Could not generate Normal Game";
       logger.log(Level.SEVERE, errorMessage + ": " + e.getMessage());
-      Sentry.capture(e);
+      Sentry.captureException(e);
       return Response.status(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode())
           .entity(errorMessage + ": " + e.getMessage())
           .build();

@@ -28,7 +28,7 @@ public class GameCodeResource {
     } catch (Exception e) {
       String errorMessage = "Could not inflate game via given code";
       logger.log(Level.WARNING, errorMessage + ": " + e.getMessage());
-      Sentry.capture(e);
+      Sentry.captureException(e);
       return Response.status(Response.Status.BAD_REQUEST.getStatusCode())
           .entity(errorMessage + ": " + e.getMessage())
           .build();
